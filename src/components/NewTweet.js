@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { handleAddTweet } from '../actions/tweets'
 
 class NewTweet extends Component {
   
@@ -15,9 +17,9 @@ class NewTweet extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const { text } = this.state
-    //todo: add tweet to store
-    console.log('new tweet: ', text)
+    const { text } = this.state    
+    const { dispatch, id } = this.props
+    dispatch(handleAddTweet(text, id))
     this.setState(()=>({
       text: ''
     }))
@@ -25,7 +27,6 @@ class NewTweet extends Component {
 
   render() {
     const { text } = this.state
-    {/* todo: redirect to home view if submitted */}
     const tweetLeft = 280 - text.length
     return (
       <div>
@@ -56,4 +57,4 @@ class NewTweet extends Component {
   }
 }
 
-export default NewTweet
+export default connect()(NewTweet)
